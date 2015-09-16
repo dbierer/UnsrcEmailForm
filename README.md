@@ -9,7 +9,7 @@ echo $this->unsrcRender([$config, $instance, $template, $action, $messages])
 ##Controller Plugin
 USAGE (in a controller action):
 ```
-$viewModel = $this->unsrcRender([$config, $instance, $template, $action, $messages])
+$viewModel = $this->unsrcProcess([$config, $instance])
 ```
 
 ##Parameters (for both the view helper and controller plugin)
