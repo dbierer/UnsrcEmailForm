@@ -1,0 +1,183 @@
+<?php
+/*
+ * Copy this file to the /config/autoload folder
+ * Change the extension from *.dist to *.php
+ * Override any params as required
+ */
+return [
+    'service_manager' => [
+        'factories' => [
+            /*
+             * you might wish to redefine the mail transport
+             * all you need to do is to define your own service manager factory class
+             * and point this key to your own class
+             * otherwise the default is "Zend\Mail\Transport\Sendmail"
+             */             
+            // 'unsrc-email-form-transport' => 'Your_Own_Factory',
+        ],
+    ],
+    // render the form using the "unsrcRender($config, $instance)" view helper
+    // $config defaults to "default"; $instance defaults to 1
+    // you can have as many config blocks and instances of any given config block as desired
+    'unsrc-config' => [      
+      // *** begin default config block
+      'default' => [
+        'emailTo'    => '',       // Send results to this email address.   If more than one, separate with commas or spaces
+        'labelAlign' => 'L',      // Choose to have the labels aligned <L>EFT,<R>IGHT, or <C>ENTER
+        'maxFields'  => 8,        // If you increase this number, you'll also need to create additional "fieldXXX" definition blocks (as above) up to the number specified
+        // NOTE: field definitions follow.  You *must* use the prefix "field" followed by a number
+        //       you can have as many field definitions as needed, up to "maxFields" above
+        'field1' => [
+            'active' => 'R',    // Activate Field 1" description="Select 'Y' if you want to activate field 1 and 'R' to activate and make it required. Enter 'H' to make the field hidden (appears in email automatically)
+            'label'  => 'From',  // The label for the 1st optional field which will appear in your email form
+            'value'  => '',      // Enter the default value for this field, or hit the spacebar for no default. If this field is a drop-down select, radio button, or checkbox field, enter options separated by commas as follows: return1=visible1,return2=visible2 (where 'returnX' = value returned when selected and 'visibleX' = what is visible onscreen. If this field remains as the 'From' field, the value entered here will be used if email checking is disabled or if there is no email address supplied by the website visitor.
+            'size'   => 40,      // The size of the 1st optional field which will appear in your email form.  If textarea, enter value as "n,n" (rows,cols).  If field is Radio / Checkbox size is width in pixels.  Set to 0 to suppress this width, which allows the CSS class to determine appearance.
+            'maxx'   => 255,     // The maximum number of characters allowed in this field
+            'from'   => 'F',     // Select 'F' if you want this field to be the 'From' text field, 'S' if you want this to be the subject text field, 'N' for a normal text field, 'A' for a textarea (i.e. a box), 'D' for a drop-down select box, 'R' for radio buttons, 'C' for check boxes, and 'U' for user defined
+            'ckRfmt' => 'C',     // If field is radio buttons or checkboxes, enter a value.  'H' = horizontal format == table/row/col/col/col; 'V' = vertical format == table/row/col/col/row/col/col. 'C' = CSS (default) assumes you will use CSS." >
+            'ckRpos' => 'B',     // If field is radio buttons or checkboxes, is label 'B' (before) or 'A' (after)?
+            ],
+        'field2' => [
+            'active' => 'R',    // Activate Field 1" description="Select 'Y' if you want to activate field 1 and 'R' to activate and make it required. Enter 'H' to make the field hidden (appears in email automatically)
+            'label'  => 'Subject',  // The label for the 1st optional field which will appear in your email form
+            'value'  => 'Subject',  // Enter the default value for this field, or hit the spacebar for no default. If this field is a drop-down select, radio button, or checkbox field, enter options separated by commas as follows: return1=visible1,return2=visible2 (where 'returnX' = value returned when selected and 'visibleX' = what is visible onscreen. If this field remains as the 'From' field, the value entered here will be used if email checking is disabled or if there is no email address supplied by the website visitor.
+            'size'   => 40,      // The size of the 2nd optional field which will appear in your email form.  If textarea, enter value as "n,n" (rows,cols).  If field is Radio / Checkbox size is width in pixels.  Set to 0 to suppress this width, which allows the CSS class to determine appearance.
+            'maxx'   => 255,     // The maximum number of characters allowed in this field
+            'from'   => 'S',     // Select 'F' if you want this field to be the 'From' text field, 'S' if you want this to be the subject text field, 'N' for a normal text field, 'A' for a textarea (i.e. a box), 'D' for a drop-down select box, 'R' for radio buttons, 'C' for check boxes, and 'U' for user defined
+            'ckRfmt' => 'C',     // If field is radio buttons or checkboxes, enter a value.  'H' = horizontal format == table/row/col/col/col; 'V' = vertical format == table/row/col/col/row/col/col. 'C' = CSS (default) assumes you will use CSS." >
+            'ckRpos' => 'B',     // If field is radio buttons or checkboxes, is label 'B' (before) or 'A' (after)?
+            ],
+        'field3' => [
+            'active' => 'N',    // Activate Field 1" description="Select 'Y' if you want to activate field 1 and 'R' to activate and make it required. Enter 'H' to make the field hidden (appears in email automatically)
+            'label'  => '3',    // The label for the 1st optional field which will appear in your email form
+            'value'  => '3',    // Enter the default value for this field, or hit the spacebar for no default. If this field is a drop-down select, radio button, or checkbox field, enter options separated by commas as follows: return1=visible1,return2=visible2 (where 'returnX' = value returned when selected and 'visibleX' = what is visible onscreen. If this field remains as the 'From' field, the value entered here will be used if email checking is disabled or if there is no email address supplied by the website visitor.
+            'size'   => 40,      // The size of the 3rd optional field which will appear in your email form.  If textarea, enter value as "n,n" (rows,cols).  If field is Radio / Checkbox size is width in pixels.  Set to 0 to suppress this width, which allows the CSS class to determine appearance.
+            'maxx'   => 255,     // The maximum number of characters allowed in this field
+            'from'   => 'N',     // Select 'F' if you want this field to be the 'From' text field, 'S' if you want this to be the subject text field, 'N' for a normal text field, 'A' for a textarea (i.e. a box), 'D' for a drop-down select box, 'R' for radio buttons, 'C' for check boxes, and 'U' for user defined
+            'ckRfmt' => 'C',     // If field is radio buttons or checkboxes, enter a value.  'H' = horizontal format == table/row/col/col/col; 'V' = vertical format == table/row/col/col/row/col/col. 'C' = CSS (default) assumes you will use CSS." >
+            'ckRpos' => 'B',     // If field is radio buttons or checkboxes, is label 'B' (before) or 'A' (after)?
+            ],
+        'field4' => [
+            'active' => 'N',    // Activate Field 1" description="Select 'Y' if you want to activate field 1 and 'R' to activate and make it required. Enter 'H' to make the field hidden (appears in email automatically)
+            'label'  => '4',    // The label for the 1st optional field which will appear in your email form
+            'value'  => '4',    // Enter the default value for this field, or hit the spacebar for no default. If this field is a drop-down select, radio button, or checkbox field, enter options separated by commas as follows: return1=visible1,return2=visible2 (where 'returnX' = value returned when selected and 'visibleX' = what is visible onscreen. If this field remains as the 'From' field, the value entered here will be used if email checking is disabled or if there is no email address supplied by the website visitor.
+            'size'   => 40,      // The size of the 4th optional field which will appear in your email form.  If textarea, enter value as "n,n" (rows,cols).  If field is Radio / Checkbox size is width in pixels.  Set to 0 to suppress this width, which allows the CSS class to determine appearance.
+            'maxx'   => 255,     // The maximum number of characters allowed in this field
+            'from'   => 'N',     // Select 'F' if you want this field to be the 'From' text field, 'S' if you want this to be the subject text field, 'N' for a normal text field, 'A' for a textarea (i.e. a box), 'D' for a drop-down select box, 'R' for radio buttons, 'C' for check boxes, and 'U' for user defined
+            'ckRfmt' => 'C',     // If field is radio buttons or checkboxes, enter a value.  'H' = horizontal format == table/row/col/col/col; 'V' = vertical format == table/row/col/col/row/col/col. 'C' = CSS (default) assumes you will use CSS." >
+            'ckRpos' => 'B',     // If field is radio buttons or checkboxes, is label 'B' (before) or 'A' (after)?
+            ],
+        'field5' => [
+            'active' => 'N',    // Activate Field 1" description="Select 'Y' if you want to activate field 1 and 'R' to activate and make it required. Enter 'H' to make the field hidden (appears in email automatically)
+            'label'  => '5',    // The label for the 5th optional field which will appear in your email form
+            'value'  => '5',    // Enter the default value for this field, or hit the spacebar for no default. If this field is a drop-down select, radio button, or checkbox field, enter options separated by commas as follows: return1=visible1,return2=visible2 (where 'returnX' = value returned when selected and 'visibleX' = what is visible onscreen. If this field remains as the 'From' field, the value entered here will be used if email checking is disabled or if there is no email address supplied by the website visitor.
+            'size'   => 40,      // The size of the 1st optional field which will appear in your email form.  If textarea, enter value as "n,n" (rows,cols).  If field is Radio / Checkbox size is width in pixels.  Set to 0 to suppress this width, which allows the CSS class to determine appearance.
+            'maxx'   => 255,     // The maximum number of characters allowed in this field
+            'from'   => 'N',     // Select 'F' if you want this field to be the 'From' text field, 'S' if you want this to be the subject text field, 'N' for a normal text field, 'A' for a textarea (i.e. a box), 'D' for a drop-down select box, 'R' for radio buttons, 'C' for check boxes, and 'U' for user defined
+            'ckRfmt' => 'C',     // If field is radio buttons or checkboxes, enter a value.  'H' = horizontal format == table/row/col/col/col; 'V' = vertical format == table/row/col/col/row/col/col. 'C' = CSS (default) assumes you will use CSS." >
+            'ckRpos' => 'B',     // If field is radio buttons or checkboxes, is label 'B' (before) or 'A' (after)?
+            ],
+        'field6' => [
+            'active' => 'N',    // Activate Field 1" description="Select 'Y' if you want to activate field 1 and 'R' to activate and make it required. Enter 'H' to make the field hidden (appears in email automatically)
+            'label'  => '6',    // The label for the 1st optional field which will appear in your email form
+            'value'  => '6',    // Enter the default value for this field, or hit the spacebar for no default. If this field is a drop-down select, radio button, or checkbox field, enter options separated by commas as follows: return1=visible1,return2=visible2 (where 'returnX' = value returned when selected and 'visibleX' = what is visible onscreen. If this field remains as the 'From' field, the value entered here will be used if email checking is disabled or if there is no email address supplied by the website visitor.
+            'size'   => 40,      // The size of the 6th optional field which will appear in your email form.  If textarea, enter value as "n,n" (rows,cols).  If field is Radio / Checkbox size is width in pixels.  Set to 0 to suppress this width, which allows the CSS class to determine appearance.
+            'maxx'   => 255,     // The maximum number of characters allowed in this field
+            'from'   => 'N',     // Select 'F' if you want this field to be the 'From' text field, 'S' if you want this to be the subject text field, 'N' for a normal text field, 'A' for a textarea (i.e. a box), 'D' for a drop-down select box, 'R' for radio buttons, 'C' for check boxes, and 'U' for user defined
+            'ckRfmt' => 'C',     // If field is radio buttons or checkboxes, enter a value.  'H' = horizontal format == table/row/col/col/col; 'V' = vertical format == table/row/col/col/row/col/col. 'C' = CSS (default) assumes you will use CSS." >
+            'ckRpos' => 'B',     // If field is radio buttons or checkboxes, is label 'B' (before) or 'A' (after)?
+            ],
+        'field7' => [
+            'active' => 'N',    // Activate Field 1" description="Select 'Y' if you want to activate field 1 and 'R' to activate and make it required. Enter 'H' to make the field hidden (appears in email automatically)
+            'label'  => '7',    // The label for the 1st optional field which will appear in your email form
+            'value'  => '7',    // Enter the default value for this field, or hit the spacebar for no default. If this field is a drop-down select, radio button, or checkbox field, enter options separated by commas as follows: return1=visible1,return2=visible2 (where 'returnX' = value returned when selected and 'visibleX' = what is visible onscreen. If this field remains as the 'From' field, the value entered here will be used if email checking is disabled or if there is no email address supplied by the website visitor.
+            'size'   => 40,      // The size of the 7th optional field which will appear in your email form.  If textarea, enter value as "n,n" (rows,cols).  If field is Radio / Checkbox size is width in pixels.  Set to 0 to suppress this width, which allows the CSS class to determine appearance.
+            'maxx'   => 255,     // The maximum number of characters allowed in this field
+            'from'   => 'N',     // Select 'F' if you want this field to be the 'From' text field, 'S' if you want this to be the subject text field, 'N' for a normal text field, 'A' for a textarea (i.e. a box), 'D' for a drop-down select box, 'R' for radio buttons, 'C' for check boxes, and 'U' for user defined
+            'ckRfmt' => 'C',     // If field is radio buttons or checkboxes, enter a value.  'H' = horizontal format == table/row/col/col/col; 'V' = vertical format == table/row/col/col/row/col/col. 'C' = CSS (default) assumes you will use CSS." >
+            'ckRpos' => 'B',     // If field is radio buttons or checkboxes, is label 'B' (before) or 'A' (after)?
+            ],
+        'field8' => [
+            'active' => 'N',    // Activate Field 1" description="Select 'Y' if you want to activate field 1 and 'R' to activate and make it required. Enter 'H' to make the field hidden (appears in email automatically)
+            'label'  => '8',    // The label for the 8th optional field which will appear in your email form
+            'value'  => '8',    // Enter the default value for this field, or hit the spacebar for no default. If this field is a drop-down select, radio button, or checkbox field, enter options separated by commas as follows: return1=visible1,return2=visible2 (where 'returnX' = value returned when selected and 'visibleX' = what is visible onscreen. If this field remains as the 'From' field, the value entered here will be used if email checking is disabled or if there is no email address supplied by the website visitor.
+            'size'   => 40,      // The size of the 1st optional field which will appear in your email form.  If textarea, enter value as "n,n" (rows,cols).  If field is Radio / Checkbox size is width in pixels.  Set to 0 to suppress this width, which allows the CSS class to determine appearance.
+            'maxx'   => 255,     // The maximum number of characters allowed in this field
+            'from'   => 'N',     // Select 'F' if you want this field to be the 'From' text field, 'S' if you want this to be the subject text field, 'N' for a normal text field, 'A' for a textarea (i.e. a box), 'D' for a drop-down select box, 'R' for radio buttons, 'C' for check boxes, and 'U' for user defined
+            'ckRfmt' => 'C',     // If field is radio buttons or checkboxes, enter a value.  'H' = horizontal format == table/row/col/col/col; 'V' = vertical format == table/row/col/col/row/col/col. 'C' = CSS (default) assumes you will use CSS." >
+            'ckRpos' => 'B',     // If field is radio buttons or checkboxes, is label 'B' (before) or 'A' (after)?
+            ],
+        'emailCC'         => '',            // Send a CC email of results to this email address.   If more than one, separate with commas or spaces.
+        'emailBCC'        => '',            // Send Results BCC" description="Send a BCC email of results to this email address.   If more than one, separate with commas or spaces.
+        'emailReplyTo'    => '',            // Reply To this address" description="Direct replies to this email address.
+        'fromName'        => '',            // Who the email is from
+		'subjectline'     => 'Subject',     // Default subject line for email to be sent; 
+        'replytoActive'   => 'N',           // Select 'Y' if you want a 'Reply-To' field to appear when the email sent. 'N' otherwise
+        'autoReset'       => 'N',           // Auto Reset Fields" description="Select 'Y' if you want all form fields to be automatically reset (cleared) after successful form submission" >
+        'cssClass'        => 'mod_sef',     // Enter the name of a CSS class to use with the form.  Creates xxx_table, xxx_row, xxx_th, xxx_td classes and xxx_input inside form where xxx = your CSS class.  Default is 'mod_sef'.
+        'col2space'       => '5',           // Enter the amount of space between the label and the input field in pixels
+        'redirectURL'     => '',            // Enter the URL you wish to redirect to after successful form submission.  NOTE: leave blank to NOT redirect!
+        'successTxtColor' => 'green',       // Enter the desired HTML text color for success                
+        'errorTxtColor'   => 'red',         // Enter the desired HTML text color for errors
+        'anchor'          => '#',           // Enter the name of any anchor tags associated with the form
+        'uploadActive'    => 0,             // Enter a number greater than 0 which represents how many file upload fields you want to have for email attachments
+        'uploadLabel'     => 'Attachment',  // Enter a label for the file upload fields (if any).
+        'uploadAllowed'   => '',            // Enter a list of allowed filename extensions separated by commas.  Example: if you want jpg,png, or gif, then enter 'jpg,png,gif'.  Leave blank to allow ANY type of file.
+        'emailFile'       => '',            // Enter the absolute directory path for email attachment files
+        'copymeLabel'     => 'Send me a copy', // The label for the Send Me A Copy Field
+        'copymeActive'    => 'N',           // Select 'Y' if you want to activate a field which lets users send a copy to themselves
+        'copymeAuto'      => 'N',           // Select 'Y' if you want to send a copy to users automatically
+        'emailCheck'      => 'Y',           // Select 'Y' if you want to check the 'From' email address.  Set to 'N' to disable this check.  If email check is disabled, the 'From' field will automatically take its value from what you entered as a default value for the 'From' field.
+        'addBrToEmail'    => 'N',           // Select 'Y' if you want to use an HTML BR tag in addition to a linefeed for each line in the email.
+        'testMode'        => 'N',           // Select 'Y' if you want to use the module in test mode.  Set to 'N' when done testing!
+        'useCaptcha'      => 'N',           // To use a 'Captcha' to foil spammers, select 'I' for an image captcha (requires additional configuration), or 'T' for a text captcha.
+        'hashKey'         => 'abcd1234!£',  // Any unique string
+        'captchaOptions'  => [
+            'imgDir'         => '',            // Enter the absolute directory path where the module can write 'captchas' (i.e. /var/www/application/images
+            'imgUrl'         => '',            // Enter a URL which corresponds with the Captcha Directory (above)
+            'wordlen'        => 8,             // Enter the desired Captcha word length (number of characters)
+            'fontSize'       => 24,            // Enter the desired Captcha font size
+            'width'          => 200,           // Enter the desired Captcha width in pixels
+            'height'         => 80,            // Enter the desired Captcha height in pixels
+            'lineNoiseLevel' => 5,             // Enter the number of lines used to obscure captcha text
+            'dotNoiseLevel'  => 100,           // Enter the number of lines used to obscure captcha text
+            'useNumbers'     => FALSE,        // Set to TRUE if you want the CAPTCHA to use only numbers
+        ],
+        // Choose the default language *only* from the choices below
+        'defaultLang' =>  
+            'en-GB', // English
+            /*
+            'af-ZA', // Afrikaans
+            'ar-SA', // Arabic
+            'bg-BG', // български (Bulgarian)
+            'cs-CZ', // česky
+            'zh-ZH', // 中文 (Chinese)
+            'hr-HR', // hrvatski (Croatian)
+            'dk-DK', // Dansk
+            'de-DE', // Deutsch
+            'el-GR', // Ελληνικά (Greek)
+            'es-ES', // Español
+            'et-EE', // Eesti
+            'fi-FI', // Finnish
+            'fr-FR', // Français
+            'he-IL', // Hebrew
+            'it-IT', // Italiano
+            'lv-LV', // Latvian
+            'nl-NL', // Nederlandse
+            'nb-NO', // Norsk
+            'hu-HU', // Magyar
+            'pl-PL', // Polski
+            'pt-PT', // Português (Portugal)
+            'pt-BR', // Português (Brazil)
+            'ru-RU', // русский (Russian)
+            'se-SE', // Svenska
+            'sk-SK', // Slovak
+            'th-TH', // ไทย (Thai)
+            'tr-TR', // Türkçe (Turkish)
+            'vi-VN', // Việt (Vietnamese)
+            */
+    ],
+    // *** end of default config block
+  ],
+  // *** end of 'unsrc-config' key
+];

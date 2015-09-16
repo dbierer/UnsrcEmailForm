@@ -1,0 +1,160 @@
+<?php
+// initialize vars + test mode
+$output = '';
+
+if ($service->_testMode == 'Y') {
+    error_reporting(E_ALL | E_STRICT);
+    ini_set('display_errors', 1);
+}
+
+// Present the Email Form
+$output .= ($service->_cssClass) ? "<div class='" . $service->_cssClass . "'>\n" : '';
+// 2012-04-20 DB: added anchor tag if > 1 (default anchor = #)
+$output .= (strlen($service->_anchor) > 1) ? "<a name='" . substr($service->_anchor, 1) . "'>&nbsp;</a>\n" : '';
+$output .= "<form method='post' "
+                . "action='" . $service->_anchor . $action . "' "
+                . "name='_SimpleEmailForm_" . $instance . "' "
+                . "id='_SimpleEmailForm_" . $instance . "' "
+                . "enctype='multipart/form-data'>\n";
+$output .= "<table class='" . $service->_tableClass . "'>\n";
+// 2010-11-28 DB: all fields are now included in $service->_field[]
+$output .= $service->formatRow();
+
+// check for file uploads
+if ($service->_uploadActive) {
+    $output .= "<tr class='" . $service->_trClass . "'>";
+    $output .= sprintf("<th align='%s' style='text-align:%s;' class='%s'>%s</th>", 
+                              $service->_labelAlign, 
+                              $service->_labelAlign,
+                              $service->_thClass, 
+                              $service->_transLang['MOD_SIMPLEEMAILFORM_uploadLabel']);
+    // space between cols
+    $output .= "<td class='" . $service->_spaceClass . "' width='" . $service->_col2space . "'>&nbsp;</td>";
+    // file upload field
+    $output .= "<td class='" . $service->_tdClass . "'>";
+    // 2013-02-15 DB: added ability to have > 1 upload field
+    for ($x = 1; $x <= $service->_uploadActive; $x++) {
+        $output .= $service->buildFileUploadField($x);
+    }
+    $output .= $service->_fileMsg;
+    $output .= "</td>";
+    $output .= "</tr>\n";
+}
+
+// render CAPTCHA
+if ($service->_useCaptcha != 'N') {
+    try {
+        // render CAPTCHA
+		$output .= "<tr class='" . $this->_trClass . "'>";
+		$output .= sprintf("<th align='%s' style='text-align:%s;' class='%s'>%s</th>", 
+							$this->_labelAlign, 
+							$this->_labelAlign, 
+							$this->_thClass, 
+							$service->_transLang['MOD_SIMPLEEMAILFORM_captcha_please_enter']);
+		// space between cols
+		$output .= "<td class='" . $this->_spaceClass . "' width='" . $this->_col2space . "'>&nbsp;</td>";
+		// captcha
+		$output .= "<td class='" . $this->_tdClass . "'>";
+        $output .= $this->formCaptcha($service->buildCaptcha());
+		$output .= "</td>";
+		$output .= "</tr>\n";
+    } catch (Exception $e) {
+        $output .= "<tr class='" . $service->_trClass . "'>";
+        $output .= sprintf("<th align='%s'  style='text-align:%s;'  class='%s'>%s</th>", 
+                                  $service->_labelAlign, 
+                                  $service->_labelAlign,
+                                  $service->_thClass, 
+                                  $service->_transLang['MOD_SIMPLEEMAILFORM_error']);
+        // space between cols
+        $output .= "<td class='" . $service->_spaceClass . "' width='" . $service->_col2space . "'>&nbsp;</td>";
+        // message
+        $output .= "<td class='" . $service->_tdClass . "'>" . $e->getMessage() . "</td>";
+        $output .= "</tr>\n";
+    }
+}
+
+// copy me field
+if ($service->_copymeActive == 'Y') {
+    $output .= "<tr class='" . $service->_trClass . "'>";
+    $output .= "<th class='" . $service->_thClass . "'>&nbsp;</th>";
+    // space between cols
+    $output .= "<td class='" . $service->_spaceClass . "' width='" . $service->_col2space . "'>&nbsp;</td>";
+    // copy me
+    $output .= "<td class='" . $service->_tdClass . "'>";
+    $output .= "<input "
+                    . "type='checkbox' "
+                    . "name='copyMe_" . $instance . "' "
+                    . "id='copyMe_" . $instance . "' "
+                    . "value='1' " 
+                    . " class='" . $service->_inputClass . "' />"
+                    . $service->_copymeLabel 
+                    . "</td>";
+    $output .= "</tr>\n";
+}
+
+// buttons
+$output .= "<tr class='" . $service->_trClass . "'>";
+$output .= "<th class='" . $service->_thClass . "'>&nbsp;</th>";
+$output .= "<td class='" . $service->_spaceClass . "' width='" . $service->_col2space . "'>&nbsp;</td>";
+$output .= "<td class='" . $service->_tdClass . "'>";
+$output .= "<input " 
+                . " class='" . $service->_inputClass . "' "
+                . "type='submit' "
+                . "name='submit_" . $instance . "' "
+                . "id='submit_" . $instance . "' "
+                . "value='" . $service->_transLang['MOD_SIMPLEEMAILFORM_button_submit'] . "' "
+                . "title='" . $service->_transLang['MOD_SIMPLEEMAILFORM_click_submit'] . "' />";
+$output .= "&nbsp;&nbsp;";
+$output .= "<input " 
+                . " class='" . $service->_inputClass . "' "
+                . "type='submit' "
+                . "name='reset_" . $instance . "' "
+                . "id='reset_" . $instance . "' "
+                . "value='" . $service->_transLang['MOD_SIMPLEEMAILFORM_button_reset'] . "' "
+                . "title='' />";
+$output .= "</td>";
+$output .= "</tr>\n";
+
+// message
+if ($message) {
+    $output .= "<tr class='" . $service->_trClass . "'>";
+    $output .= "<th class='" . $service->_thClass . "'>&nbsp;</th>";
+    // space between cols
+    $output .= "<td class='" . $service->_spaceClass . "' width='" . $service->_col2space . "'>&nbsp;</td>";
+    // message
+    $output .= "<td class='" . $service->_tdClass . "'>";
+    $output .= $message;
+    $output .= "</td>";
+    $output .= "</tr>\n";
+}
+
+// test mode
+if ($service->_testMode == 'Y') {
+    $output .= "<tr class='" . $service->_trClass . "'>";
+    $output .= "<th class='" . $service->_thClass . "'>&nbsp;</th>";
+    // space between cols
+    $output .= "<td class='" . $service->_spaceClass . "' width='" . $service->_col2space . "'>&nbsp;</td>";
+    // message
+    $output .= "<td class='" . $service->_tdClass . "'>";
+    $output .= '<pre>';
+    $output .= '$_POST:' . '<br />';
+    $output .= htmlspecialchars(var_export($_POST, TRUE));
+    $output .= "\nTest Info:" . '<br />';
+    foreach ($service->_testInfo as $item) {
+        $output .= $item;
+    }
+    $output .= "\nMail Object:" . '<br />';
+    $output .= var_export($service->_msg, TRUE);
+    $output .= "\nMisc Vars:" . '<br />';
+    $output .= '_fromField: ' . $service->_fromField;
+    $output .= '</pre>';
+    $output .= "</td>";
+    $output .= "</tr>\n";
+}
+$output .= "</table>\n";
+// 2015-04-24 DB: add CSRF hash
+$output .= sprintf("<input type='hidden' name='%s' value='%s'>\n",
+                          $service->_csrfField, $service->buildCsrfHash());
+$output .= "</form>\n";
+$output .= ($service->_cssClass) ? '</div>' : '';
+echo $output;
